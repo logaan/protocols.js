@@ -1,7 +1,30 @@
 var protocols = require("./protocols.js"),
     _         = require("./underscore.js");
 
-// TESTS
+// Normal usage of protocols
+
+var renderable = protocols.create("render");
+
+protocols.implement(renderable, "null", {
+  "render": function(value) {
+    console.log("Nothing to see here");
+  }
+});
+
+protocols.implement(renderable, "boolean", {
+  "render": function(value) {
+    console.log("Much wisdom can be found in truth");
+  }
+});
+
+protocols.implement(renderable, "string", {});
+
+renderable.render(null);
+renderable.render(true);
+try { renderable.render("foo")     } catch (e) { console.log(e) };
+try { renderable.render(undefined) } catch (e) { console.log(e) };
+
+// Low level type checking
 
 function testType(value, expected) {
   var type = protocols.getType(value);
@@ -29,25 +52,5 @@ testType([],            "array");
 testType({},            "object");
 testType(function() {}, "function");
 
-var renderable = protocols.create("render");
-
-protocols.implement(renderable, "null", {
-  "render": function(value) {
-    console.log("Nothing to see here");
-  }
-});
-
-protocols.implement(renderable, "boolean", {
-  "render": function(value) {
-    console.log("Much wisdom can be found in truth");
-  }
-});
-
-protocols.implement(renderable, "string", {});
-
-renderable.render(null);
-renderable.render(true);
-try { renderable.render("foo")     } catch (e) { console.log(e) };
-try { renderable.render(undefined) } catch (e) { console.log(e) };
 
 
