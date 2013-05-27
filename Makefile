@@ -1,2 +1,2 @@
 default:
-	node protocols.js
+	node test.js
